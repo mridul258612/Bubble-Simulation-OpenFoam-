@@ -1,1 +1,1 @@
-# Bubble-Simulation-OpenFoam-
+# bubble_sim
