@@ -1,16 +1,16 @@
 #!/bin/sh
-cd ${0%/*} || exit 1    # Run from this directory
+cd "${0%/*}" || exit 1    # Run from this directory
 
 # Source tutorial run functions
 . $WM_PROJECT_DIR/bin/tools/RunFunctions
 
-# Get application name
-application=$(getApplication)
-
+# Run OpenFOAM preprocessing and solver steps
 runApplication blockMesh
-runApplication snappyHexMesh
 runApplication setFields
 runApplication topoSet
-runApplication $application
+runApplication interFoam
 
-#------------------------------------------------------------------------------
+# Run Python post-processing scripts
+echo "Running Python post-processing..."
+python3 create_alpha_air.py
+python3 plot_bubble_velocity.py
