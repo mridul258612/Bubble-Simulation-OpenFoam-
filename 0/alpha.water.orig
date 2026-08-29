@@ -1,0 +1,57 @@
+/*----------------*- C++ -*----------------------------------*\
+| =========                 |                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD   |
+|  \\    /   O peration     | Version:  v2312 / Standard      |
+|   \\  /    A nd           | Website:  www.openfoam.com      |
+|    \\/     M anipulation  |                                 |
+\*-----------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      alpha.water;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 1; // 100% water background
+
+boundaryField
+{
+    axis
+    {
+        type            empty;
+    }
+    wedgeFront
+    {
+        type            wedge;
+    }
+
+    wedgeBack
+    {
+        type            wedge;
+    }
+
+    wall
+    {
+        type            zeroGradient;
+    }
+
+    // Bottom floor: strictly keeps phase as 100% water
+    inlet
+    {
+        type            zeroGradient;
+    }
+
+    // Top outlet: permits displacement outflow, draws air if inflow occurs
+    outlet
+    {
+    type            inletOutlet;
+    inletValue      uniform 0;
+    value           uniform 0;
+    }   
+}
+
+// ************************************************************************* //

@@ -1,0 +1,104 @@
+/*----------------*- C++ -*----------------------------------*\
+| =========                 |                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD   |
+|  \\    /   O peration     | Version:  v2312 / Standard      |
+|   \\  /    A nd           | Website:  www.openfoam.com      |
+|    \\/     M anipulation  |                                 |
+\*-----------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Automatically converts mm entries below into meters (SI units)
+scale   0.001; 
+
+vertices
+(
+    // Bottom Face (Z = 0 mm)
+    (0.0000   0.0000  0.0)    // Vertex 0: Axis center (Z=0)
+    (4.9952 -0.6543  0.0)    // Vertex 1: Outer front (-2.5 deg)
+    (4.9952  0.6543  0.0)    // Vertex 2: Outer back  (+2.5 deg)
+    (0.0000   0.0000  0.0)    // Vertex 3: Axis center (collapsed with 0)
+
+    // Top Face (Z = 200 mm)
+    (0.0000   0.0000  100.0)  // Vertex 4: Axis center (Z=50 mm)
+    (4.9952 -0.6543  100.0)  // Vertex 5: Outer front (-2.5 deg)
+    (4.9952  0.6543  100.0)  // Vertex 6: Outer back  (+2.5 deg)
+    (0.0000   0.0000  100.0)  // Vertex 7: Axis center (collapsed with 4)
+);
+
+blocks
+(
+    // hex (v0 v1 v2 v3 v4 v5 v6 v7) (Nx Ny Nz) simpleGrading (Gx Gy Gz)
+    hex (0 1 2 3 4 5 6 7) (40 1 440) simpleGrading (2 1 1)
+);
+
+edges
+(
+    // Defines curved outer pipe walls instead of flat faces
+    arc 1 2 (5 0.0 0.0)
+    arc 5 6 (5 0.0 100.0)
+);
+
+boundary
+(
+    axis
+    {
+        type            empty;
+        faces
+        (
+            (0 3 7 4)
+        );
+    }
+    wall
+    {
+        type            wall;
+        faces
+        (
+            (1 2 6 5)
+        );
+    }
+
+    inlet
+    {
+        type            wall;
+        faces
+        (
+            (0 3 2 1)
+        );
+    }
+
+    outlet
+    {
+        type            patch;
+        faces
+        (
+            (4 5 6 7)
+        );
+    }
+
+    wedgeFront
+    {
+        type            wedge;
+        faces
+        (
+            (0 1 5 4)
+        );
+    }
+
+    wedgeBack
+    {
+        type            wedge;
+        faces
+        (
+            (2 3 7 6)
+        );
+    }
+);
+
+// ************************************************************************* //

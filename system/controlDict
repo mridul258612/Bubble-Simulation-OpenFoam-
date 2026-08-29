@@ -1,0 +1,74 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org / https://openfoam.com
+    \\  /    A nd           |
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     interFoam;
+
+startFrom       startTime;
+
+startTime       0.206;
+
+stopAt          endTime;
+
+endTime         1;            // Adjust based on total rise time
+
+deltaT          1e-3;           // Initial time step (will auto-adjust)
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.002;          // Saves a time directory every 2 ms
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;            // Dynamic time stepping (critical for VOF)
+
+maxCo           0.5;            // Maximum global Courant number
+
+maxAlphaCo      0.2;            // Interface Courant number (keeps bubble boundary sharp)
+
+maxDeltaT       1e-3;           // Upper limit on time step size
+
+functions
+{
+    bubbleAirVelocity
+    {
+    type            volFieldValue;
+    libs            ("libfieldFunctionObjects.so");
+
+    log             true;
+    writeControl    timeStep;
+    writeInterval   1;
+    writeFields     false;
+
+    operation       volAverage;
+    fields          (U);
+    weightField     alpha.air;
+
+    regionType      cellZone;
+    name            bubbleRegion;
+    }
+}

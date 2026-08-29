@@ -1,0 +1,39 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue alpha.water 1
+);
+
+// Regions to overwrite with gas bubble (alpha = 0)
+regions
+(
+    sphereToCell
+    {
+        centre      (0 0 0.003);  
+        radius      0.0010;       // 1 mm 
+        
+        fieldValues
+        (
+            volScalarFieldValue alpha.water 0
+        );
+    }
+);
+
+
+
+// ************************************************************************* //
