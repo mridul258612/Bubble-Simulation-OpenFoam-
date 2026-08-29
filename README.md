@@ -4,7 +4,7 @@ A 2D/3D multiphase CFD simulation modeling the dynamics of an air bubble rising 
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 * **Solver:** `interFoam` (Volume of Fluid - VOF method for two immiscible, incompressible fluids)
 * **Phases:** Air (dispersed bubble phase) and Water (continuous medium)
@@ -15,7 +15,7 @@ $$U_z = \frac{\sum (\alpha_{\text{air}} \cdot U_z \cdot V_{\text{cell}})}{\sum (
 
 ---
 
-## 📊 Results & Velocity Profile
+##  Results & Velocity Profile
 
 ![Bubble Velocity Plot](bubble_velocity_plot.png)
 
@@ -39,7 +39,7 @@ For a millimeter-scale air bubble in water ($D \approx 2 - 4\text{ mm}$), analyt
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```text
 ├── 0/                        # Initial and boundary conditions
