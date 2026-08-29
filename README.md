@@ -17,7 +17,7 @@ $$U_z = \frac{\sum (\alpha_{\text{air}} \cdot U_z \cdot V_{\text{cell}})}{\sum (
 
 ## 📊 Results & Velocity Profile
 
-![Bubble Velocity Plot](bubble_velocity_plot2.png)
+![Bubble Velocity Plot](bubble_velocity_plot.png)
 
 ### Velocity Curve Analysis
 
